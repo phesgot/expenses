@@ -87,6 +87,38 @@ class HomeScreen extends StatelessWidget {
                       ));
                 }).toList(),
               ),
+              Card(
+                elevation: 5,
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Column(
+                    children: [
+                      const TextField(
+                        decoration: InputDecoration(
+                          labelText: 'Título',
+                        ),
+                      ),
+                      const TextField(
+                        decoration: InputDecoration(
+                          labelText: 'Título',
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {},
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xff900c3f),
+                            ),
+                            child: const Text('Nova Transação')
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              )
             ],
           )),
     );
