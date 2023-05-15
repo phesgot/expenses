@@ -13,19 +13,19 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
-  final _transactions = [
-    Transaction(
-      id: 't1',
-      title: 'Tênis',
-      value: 310.20,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't2',
-      title: 'Conta de Luz',
-      value: 103.75,
-      date: DateTime.now(),
-    ),
+  final List<Transaction> _transactions = [
+    // Transaction(
+    //   id: 't1',
+    //   title: 'Tênis',
+    //   value: 310.20,
+    //   date: DateTime.now(),
+    // ),
+    // Transaction(
+    //   id: 't2',
+    //   title: 'Conta de Luz',
+    //   value: 103.75,
+    //   date: DateTime.now(),
+    // ),
   ];
 
   _openTransactionFormModal(BuildContext context) {
