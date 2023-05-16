@@ -48,6 +48,12 @@ class _HomeScreenState extends State<HomeScreen> {
     Navigator.of(context).pop();
   }
 
+  void _removeTransaction(String id) {
+    setState(() {
+      _transactions.removeWhere((tr) => tr.id == id);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -69,7 +75,10 @@ class _HomeScreenState extends State<HomeScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Chart(recentTransaction: _recentTransactions),
-              TransactionList(transactions: _transactions),
+              TransactionList(
+                transactions: _transactions,
+                onRemove: _removeTransaction,
+              ),
             ],
           ),
         ),
