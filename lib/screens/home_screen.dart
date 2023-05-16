@@ -1,4 +1,6 @@
+import 'dart:ffi';
 import 'dart:math';
+import 'package:expenses/components/chart.dart';
 import 'package:flutter/material.dart';
 import '../components/transaction_form.dart';
 import '../components/transaction_list.dart';
@@ -14,19 +16,31 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
 
   final List<Transaction> _transactions = [
-    // Transaction(
-    //   id: 't1',
-    //   title: 'Tênis',
-    //   value: 310.20,
-    //   date: DateTime.now(),
-    // ),
-    // Transaction(
-    //   id: 't2',
-    //   title: 'Conta de Luz',
-    //   value: 103.75,
-    //   date: DateTime.now(),
-    // ),
+    Transaction(
+      id: 't0',
+      title: 'Cabo',
+      value: 600.20,
+      date: DateTime.now().subtract(Duration(days: 33)),
+    ),
+    Transaction(
+      id: 't1',
+      title: 'Tênis',
+      value: 310.20,
+      date: DateTime.now().subtract(Duration(days: 3)),
+    ),
+    Transaction(
+      id: 't2',
+      title: 'Conta de Luz',
+      value: 103.75,
+      date: DateTime.now().subtract(Duration(days: 4)),
+    ),
   ];
+
+  List<Transaction> get _recentTransactions {
+    return _transactions.where((tr){
+      return tr.date.isAfter(DateTime.now().subtract(const Duration(days: 7)));
+    }).toList();
+  }
 
   _openTransactionFormModal(BuildContext context) {
     showModalBottomSheet(
@@ -72,10 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Card(
-                elevation: 2,
-                child: Text("Gráfico"),
-              ),
+              Chart(recentTransaction: _recentTransactions),
               TransactionList(transactions: _transactions),
             ],
           ),
@@ -89,6 +100,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
-// #900c3f
-// #581845

@@ -43,6 +43,13 @@ class Expenses extends StatelessWidget {
                 color: Color(0xff581845),
               ),
           ),
+          titleSmall: GoogleFonts.quicksand(
+            textStyle: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
+          ),
         ),
         appBarTheme: AppBarTheme(
           titleTextStyle: GoogleFonts.openSans(
