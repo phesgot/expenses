@@ -27,10 +27,10 @@ class Chart extends StatelessWidget {
         'day': DateFormat.E().format(weekDay)[0],
         'value': totalSum,
       };
-    });
+    }).reversed.toList();
   }
 
-  double get _weekTotalValue{
+  double get _weekTotalValue {
     return groupedTransactions.fold(0.0, (sum, tr) {
       return sum + (tr['value'] as double);
     });
@@ -52,7 +52,9 @@ class Chart extends StatelessWidget {
                 child: ChartBar(
                   label: tr['day'] as String,
                   value: tr['value'] as double,
-                  percentage: (tr['value'] as double) / _weekTotalValue,
+                  percentage: _weekTotalValue == 0
+                      ? 0
+                      : (tr['value'] as double) / _weekTotalValue,
                 ),
               );
             }).toList(),

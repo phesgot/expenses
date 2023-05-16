@@ -21,6 +21,13 @@ class Expenses extends StatelessWidget {
           tertiary: Colors.grey[200],
         ),
         textTheme: GoogleFonts.quicksandTextTheme(textTheme).copyWith(
+          labelLarge: GoogleFonts.quicksand(
+            textStyle: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
           bodySmall: GoogleFonts.quicksand(
             textStyle: const TextStyle(
               fontSize: 12,
@@ -37,11 +44,11 @@ class Expenses extends StatelessWidget {
             ),
           ),
           bodyLarge: GoogleFonts.quicksand(
-              textStyle: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Color(0xff581845),
-              ),
+            textStyle: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
           ),
           titleSmall: GoogleFonts.quicksand(
             textStyle: const TextStyle(

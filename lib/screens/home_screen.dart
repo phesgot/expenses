@@ -14,30 +14,10 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
-  final List<Transaction> _transactions = [
-    Transaction(
-      id: 't0',
-      title: 'Cabo',
-      value: 600.20,
-      date: DateTime.now().subtract(Duration(days: 33)),
-    ),
-    Transaction(
-      id: 't1',
-      title: 'Tênis',
-      value: 310.20,
-      date: DateTime.now().subtract(Duration(days: 3)),
-    ),
-    Transaction(
-      id: 't2',
-      title: 'Conta de Luz',
-      value: 103.75,
-      date: DateTime.now().subtract(Duration(days: 4)),
-    ),
-  ];
+  final List<Transaction> _transactions = [];
 
   List<Transaction> get _recentTransactions {
-    return _transactions.where((tr){
+    return _transactions.where((tr) {
       return tr.date.isAfter(DateTime.now().subtract(const Duration(days: 7)));
     }).toList();
   }
@@ -46,17 +26,19 @@ class _HomeScreenState extends State<HomeScreen> {
     showModalBottomSheet(
       context: context,
       builder: (_) {
-        return TransactionForm(onSubmit: _addTransaction,);
+        return TransactionForm(
+          onSubmit: _addTransaction,
+        );
       },
     );
   }
 
-  _addTransaction(String title, double value) {
+  _addTransaction(String title, double value, DateTime date) {
     final newTransaction = Transaction(
       id: Random().nextDouble().toString(),
       title: title,
       value: value,
-      date: DateTime.now(),
+      date: date,
     );
 
     setState(() {
