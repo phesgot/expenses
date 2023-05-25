@@ -15,6 +15,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final List<Transaction> _transactions = [];
+  bool _showChart = false;
 
   List<Transaction> get _recentTransactions {
     return _transactions.where((tr) {
@@ -56,28 +57,62 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final appBar = AppBar(
+      title: Text(
+        "Despesas Pessoais",
+        style: TextStyle(
+          //Para dar responsividade ao tamanho de texto
+          fontSize: 20 * MediaQuery.of(context).textScaleFactor,
+        ),
+      ),
+      centerTitle: false,
+      elevation: 0,
+      actions: [
+        IconButton(
+          onPressed: () => _openTransactionFormModal(context),
+          icon: const Icon(Icons.add),
+        )
+      ],
+    );
+    //Obtendo o tamanho da tela e subtraindo o app bar e barra de status
+    final availableHeight = MediaQuery.of(context).size.height -
+        appBar.preferredSize.height -
+        MediaQuery.of(context).padding.top;
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.tertiary,
-        appBar: AppBar(
-          title: const Text("Despesas Pessoais"),
-          centerTitle: false,
-          elevation: 0,
-          actions: [
-            IconButton(
-              onPressed: () => _openTransactionFormModal(context),
-              icon: const Icon(Icons.add),
-            )
-          ],
-        ),
+        appBar: appBar,
         body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Chart(recentTransaction: _recentTransactions),
-              TransactionList(
-                transactions: _transactions,
-                onRemove: _removeTransaction,
+              //Botão para exibição do grafico ou lista
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text("Exibir Gráfico"),
+                  Switch(value: _showChart, onChanged: (value){
+                    setState(() {
+                      _showChart = value;
+                    });
+                  }),
+                ],
+              ),
+              if (_showChart)
+              //GRÁFICO
+              SizedBox(
+                  //Deixando o componante responsivo permintindo ocupar um certo percentual do tamanho da tela.
+                  height: availableHeight * 0.25,
+                  child: Chart(recentTransaction: _recentTransactions)),
+              if(!_showChart)
+              //LISTA
+              SizedBox(
+                height: availableHeight * 0.75,
+                child: TransactionList(
+                  transactions: _transactions,
+                  onRemove: _removeTransaction,
+                ),
               ),
             ],
           ),

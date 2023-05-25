@@ -15,71 +15,71 @@ class TransactionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 700,
-      child: transactions.isEmpty
-          ? Column(
+    return transactions.isEmpty
+        ? LayoutBuilder(builder: (context, constraints) {
+            return Column(
               children: [
-                const Text("Nenhuma transação cadastrada!"),
-                const SizedBox(height: 20),
                 SizedBox(
-                  height: 200,
+                  height: constraints.maxHeight * 0.2,
+                  child: const Text("Nenhuma transação cadastrada!"),
+                ),
+                SizedBox(
+                  height: constraints.maxHeight * 0.5,
                   child: Image.asset(
                     'images/waiting.png',
                     fit: BoxFit.cover,
                   ),
                 )
               ],
-            )
-          : ListView.builder(
-              itemCount: transactions.length,
-              itemBuilder: (ctx, index) {
-                final tr = transactions[index];
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Slidable(
-                    actionExtentRatio: 0.25,
-                    actionPane: const SlidableDrawerActionPane(),
-                    secondaryActions: [
-                      IconSlideAction(
-                        color: Colors.red,
-                        icon: Icons.delete,
-                        onTap: () => onRemove(tr.id),
-                        caption: 'Deletar',
-                      )
-                    ],
-                    child: Card(
-                      elevation: 4,
-                      margin: const EdgeInsets.all(0),
-                      child: ListTile(
-                        leading: CircleAvatar(
-                          backgroundColor:
-                              Theme.of(context).colorScheme.primary,
-                          radius: 30,
-                          child: Padding(
-                            padding: const EdgeInsets.all(6.0),
-                            child: FittedBox(
-                              child: Text(
-                                'R\$${tr.value.toStringAsFixed(2)}',
-                                style: Theme.of(context).textTheme.bodyLarge,
-                              ),
+            );
+          })
+        : ListView.builder(
+            itemCount: transactions.length,
+            itemBuilder: (ctx, index) {
+              final tr = transactions[index];
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Slidable(
+                  actionExtentRatio: 0.25,
+                  actionPane: const SlidableDrawerActionPane(),
+                  secondaryActions: [
+                    IconSlideAction(
+                      color: Colors.red,
+                      icon: Icons.delete,
+                      onTap: () => onRemove(tr.id),
+                      caption: 'Deletar',
+                    )
+                  ],
+                  child: Card(
+                    elevation: 4,
+                    margin: const EdgeInsets.all(0),
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        backgroundColor: Theme.of(context).colorScheme.primary,
+                        radius: 30,
+                        child: Padding(
+                          padding: const EdgeInsets.all(6.0),
+                          child: FittedBox(
+                            child: Text(
+                              'R\$${tr.value.toStringAsFixed(2)}',
+                              style: Theme.of(context).textTheme.bodyLarge,
                             ),
                           ),
                         ),
-                        title: Text(
-                          tr.title,
-                          style: Theme.of(context).textTheme.bodyMedium,
-                        ),
-                        subtitle: Text(
-                          DateFormat('d MMM y').format(tr.date),
-                          style: Theme.of(context).textTheme.bodySmall,
-                        ),
+                      ),
+                      title: Text(
+                        tr.title,
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                      subtitle: Text(
+                        DateFormat('d MMM y').format(tr.date),
+                        style: Theme.of(context).textTheme.bodySmall,
                       ),
                     ),
                   ),
-                );
-              },
-            ),
-    );
+                ),
+              );
+            },
+          );
   }
 }
