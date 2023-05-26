@@ -57,6 +57,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    // vrificar a orientação do aparelho.
+    bool isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
+
     final appBar = AppBar(
       title: Text(
         "Despesas Pessoais",
@@ -68,6 +72,15 @@ class _HomeScreenState extends State<HomeScreen> {
       centerTitle: false,
       elevation: 0,
       actions: [
+        if(isLandscape)
+        IconButton(
+          icon: Icon( _showChart ? Icons.list : Icons.bar_chart),
+          onPressed: () {
+            setState(() {
+              _showChart = !_showChart;
+            });
+          },
+        ),
         IconButton(
           onPressed: () => _openTransactionFormModal(context),
           icon: const Icon(Icons.add),
@@ -88,6 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               //Botão para exibição do grafico ou lista
+              if(isLandscape)
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -99,13 +113,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   }),
                 ],
               ),
-              if (_showChart)
+              if (_showChart || !isLandscape)
               //GRÁFICO
               SizedBox(
                   //Deixando o componante responsivo permintindo ocupar um certo percentual do tamanho da tela.
-                  height: availableHeight * 0.25,
+                  height: availableHeight * ( isLandscape ? 0.6 : 0.25),
                   child: Chart(recentTransaction: _recentTransactions)),
-              if(!_showChart)
+              if(!_showChart || !isLandscape)
               //LISTA
               SizedBox(
                 height: availableHeight * 0.75,
