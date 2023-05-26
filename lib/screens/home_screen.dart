@@ -58,15 +58,17 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
 
+    final mediaQuerry = MediaQuery.of(context);
+
     // vrificar a orientação do aparelho.
-    bool isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
+    bool isLandscape = mediaQuerry.orientation == Orientation.landscape;
 
     final appBar = AppBar(
       title: Text(
         "Despesas Pessoais",
         style: TextStyle(
           //Para dar responsividade ao tamanho de texto
-          fontSize: 20 * MediaQuery.of(context).textScaleFactor,
+          fontSize: 20 * mediaQuerry.textScaleFactor,
         ),
       ),
       centerTitle: false,
@@ -88,9 +90,9 @@ class _HomeScreenState extends State<HomeScreen> {
       ],
     );
     //Obtendo o tamanho da tela e subtraindo o app bar e barra de status
-    final availableHeight = MediaQuery.of(context).size.height -
+    final availableHeight = mediaQuerry.size.height -
         appBar.preferredSize.height -
-        MediaQuery.of(context).padding.top;
+        mediaQuerry.padding.top;
 
     return SafeArea(
       child: Scaffold(
@@ -101,28 +103,28 @@ class _HomeScreenState extends State<HomeScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               //Botão para exibição do grafico ou lista
-              if(isLandscape)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text("Exibir Gráfico"),
-                  Switch(value: _showChart, onChanged: (value){
-                    setState(() {
-                      _showChart = value;
-                    });
-                  }),
-                ],
-              ),
+              //if(isLandscape)
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: [
+              //     const Text("Exibir Gráfico"),
+              //     Switch(value: _showChart, onChanged: (value){
+              //       setState(() {
+              //         _showChart = value;
+              //       });
+              //     }),
+              //   ],
+              // ),
               if (_showChart || !isLandscape)
               //GRÁFICO
               SizedBox(
                   //Deixando o componante responsivo permintindo ocupar um certo percentual do tamanho da tela.
-                  height: availableHeight * ( isLandscape ? 0.6 : 0.25),
+                  height: availableHeight * ( isLandscape ? 0.75 : 0.25),
                   child: Chart(recentTransaction: _recentTransactions)),
               if(!_showChart || !isLandscape)
               //LISTA
               SizedBox(
-                height: availableHeight * 0.75,
+                height: availableHeight * ( isLandscape ? 1 : 0.75),
                 child: TransactionList(
                   transactions: _transactions,
                   onRemove: _removeTransaction,

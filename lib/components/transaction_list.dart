@@ -47,7 +47,8 @@ class TransactionList extends StatelessWidget {
                       color: Colors.red,
                       icon: Icons.delete,
                       onTap: () => onRemove(tr.id),
-                      caption: 'Deletar',
+                      // verificando a largura da tela depedendo da proporção exibir o texto ou não
+                      caption: MediaQuery.of(context).size.width > 480 ?'Excluir' : null,
                     )
                   ],
                   child: Card(
