@@ -30,7 +30,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  intl: ^0.17.0
+  intl: ^0.18.0
   google_fonts: ^4.0.4
   flutter_slidable: ^0.6.0
   device_preview: ^1.1.0
